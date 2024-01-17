@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Converter</title>
+    <!-- Bootstrap CSS link -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('./celsius-convert.jpg') no-repeat center center fixed; /* Use your image path */
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh; /* 100% of the viewport height */
+            color: #fff; /* Set default text color to white */
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        label {
+            font-weight: bold;
+            color: whitesmoke; /* Set label text color to white for better visibility */
+        }
+
+        input,
+        select,
+        button {
+            margin-bottom: 10px;
+            color: #000; /* Set input, select, and button text color to black */
+        }
+
+        #result {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .card {
+            background:  rgba(0, 0, 0, 0.664); /* Set a semi-transparent white background for the card */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <!-- Bootstrap card for styling -->
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="card-title" style="color: whitesmoke;">Temperature Converter</h1>
+
+                        <label for="temperature">Temperature:</label>
+                        <input type="text" class="form-control" id="temperature" placeholder="Enter temperature" oninput="validateInput()">
+
+                        <label for="unit" style="color: #fff;">Choose unit:</label>
+                        <select class="form-control" id="unit">
+                            <option value="celsius">Celsius</option>
+                            <option value="fahrenheit">Fahrenheit</option>
+                            <option value="kelvin">Kelvin</option>
+                        </select>
+
+                        <button class="btn btn-primary btn-block" onclick="convertTemperature()">Convert</button>
+
+                        <div id="result"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js scripts (required for Bootstrap components) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script>
+        function validateInput() {
+            var input = document.getElementById('temperature').value;
+            if (isNaN(input)) {
+                alert('Please enter a valid number for temperature.');
+                document.getElementById('temperature').value = '';
+            }
+        }
+
+        function convertTemperature() {
+            var temperature = parseFloat(document.getElementById('temperature').value);
+            var unit = document.getElementById('unit').value;
+            var resultElement = document.getElementById('result');
+
+            if (isNaN(temperature)) {
+                alert('Please enter a valid number for temperature.');
+                document.getElementById('temperature').value = '';
+                resultElement.innerHTML = '';
+                return;
+            }
+
+            var convertedTemperature;
+            var resultText;
+
+            if (unit === 'celsius') {
+                convertedTemperature = (temperature * 9/5) + 32;
+                resultText = convertedTemperature + ' °F';
+            } else if (unit === 'fahrenheit') {
+                convertedTemperature = (temperature - 32) * 5/9;
+                resultText = convertedTemperature + ' °C';
+            } else if (unit === 'kelvin') {
+                convertedTemperature = temperature + 273.15;
+                resultText = convertedTemperature + ' K';
+            }
+
+            resultElement.innerHTML = '<p class="mt-3">Converted Temperature: ' + resultText + '</p>';
+        }
+    </script>
+
+</body>
+
+</html>
